@@ -34,7 +34,7 @@
                 {checkbox: true, fixed: true},
                 {field: 'sort', title: '排序权重', align: 'center', width: 100, sort: true, templet: '#SortInputTpl'},
                 {
-                    title: '提交用户', minWidth: 200, width: '10%', templet: function (d) {
+                    title: '提交用户', minWidth: 200, templet: function (d) {
                         return showTableImage(d.user_headimg, true, '', (d.user_nickname || '') + " " + (d.user_phone || ''));
                     }
                 },

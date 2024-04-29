@@ -18,7 +18,7 @@ class Problem extends Controller
 {
 
     /**
-     * 获取反馈意见
+     * 获取常见问题
      * @return void
      */
     public function get()

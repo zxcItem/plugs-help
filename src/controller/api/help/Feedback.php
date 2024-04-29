@@ -25,7 +25,7 @@ class Feedback extends Auth
     public function get()
     {
         HelpFeedback::mQuery(null, function (QueryHelper $query) {
-            $query->where(['unid' => $this->unid])->like('content#keys')->equal('id');
+            $query->where(['unid' => $this->unid,'deleted' => 0])->like('content#keys')->equal('id');
             $this->success('获取反馈意见', $query->order('sort desc,id desc')->page(true, false, false, 10));
         });
     }
