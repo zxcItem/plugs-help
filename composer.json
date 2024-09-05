@@ -21,6 +21,7 @@
         "config": {
             "type": "plugin",
             "name": "帮助咨询管理",
+            "cover": "iconfont iconfont-comment",
             "description": "帮助咨询模块，包含：意见反馈,常见问题,工单提问"
         },
         "think": {
