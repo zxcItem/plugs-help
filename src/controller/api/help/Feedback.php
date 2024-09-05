@@ -6,7 +6,7 @@ declare (strict_types=1);
 namespace plugin\help\controller\api\help;
 
 use plugin\account\controller\api\Auth;
-use plugin\help\model\HelpFeedback;
+use plugin\help\model\PluginHelpFeedback;
 use think\admin\Exception;
 use think\admin\helper\QueryHelper;
 use think\admin\Storage;
@@ -24,7 +24,7 @@ class Feedback extends Auth
      */
     public function get()
     {
-        HelpFeedback::mQuery(null, function (QueryHelper $query) {
+        PluginHelpFeedback::mQuery(null, function (QueryHelper $query) {
             $query->where(['unid' => $this->unid,'deleted' => 0])->like('content#keys')->equal('id');
             $this->success('获取反馈意见', $query->order('sort desc,id desc')->page(true, false, false, 10));
         });
@@ -50,7 +50,7 @@ class Feedback extends Auth
             }
             $data['images'] = implode('|', $images);
         }
-        if (($model = HelpFeedback::mk())->save($data)) {
+        if (($model = PluginHelpFeedback::mk())->save($data)) {
             $this->success('提交成功！', $model->toArray());
         } else {
             $this->error('提交失败！');

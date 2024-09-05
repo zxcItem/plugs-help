@@ -5,7 +5,7 @@ declare (strict_types=1);
 
 namespace plugin\help\controller\api\help;
 
-use plugin\help\model\HelpProblem;
+use plugin\help\model\PluginHelpProblem;
 use think\admin\Controller;
 use think\admin\helper\QueryHelper;
 
@@ -23,7 +23,7 @@ class Problem extends Controller
      */
     public function get()
     {
-        HelpProblem::mQuery(null, function (QueryHelper $query) {
+        PluginHelpProblem::mQuery(null, function (QueryHelper $query) {
             $query->like('name')->equal('id');
             $this->success('获取反馈意见', $query->order('sort desc,id desc')->page(true, false, false, 10));
         });

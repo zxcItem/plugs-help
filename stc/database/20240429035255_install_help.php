@@ -28,23 +28,23 @@ class InstallHelp extends Migrator
      */
     public function change()
     {
-        $this->_create_help_feedback();
-        $this->_create_help_problem();
-        $this->_create_help_question();
-        $this->_create_help_question_x();
+        $this->_create_plugin_help_feedback();
+        $this->_create_plugin_help_problem();
+        $this->_create_plugin_help_question();
+        $this->_create_plugin_help_question_x();
     }
 
     /**
-     * 创建数据对象
-     * @class HelpFeedback
-     * @table help_feedback
+     * 数据-意见-反馈
+     * @class PluginHelpFeedback
+     * @table plugin_help_feedback
      * @return void
      */
-    private function _create_help_feedback()
+    private function _create_plugin_help_feedback()
     {
 
         // 当前数据表
-        $table = 'help_feedback';
+        $table = 'plugin_help_feedback';
 
         // 存在则跳过
         if ($this->hasTable($table)) return;
@@ -79,16 +79,16 @@ class InstallHelp extends Migrator
     }
 
     /**
-     * 创建数据对象
-     * @class HelpProblem
-     * @table help_problem
+     * 数据-常见-问题
+     * @class PluginHelpProblem
+     * @table plugin_help_problem
      * @return void
      */
-    private function _create_help_problem()
+    private function _create_plugin_help_problem()
     {
 
         // 当前数据表
-        $table = 'help_problem';
+        $table = 'plugin_help_problem';
 
         // 存在则跳过
         if ($this->hasTable($table)) return;
@@ -118,16 +118,16 @@ class InstallHelp extends Migrator
     }
 
     /**
-     * 创建数据对象
-     * @class HelpQuestion
-     * @table help_question
+     * 数据-问答-内容
+     * @class PluginHelpQuestion
+     * @table plugin_help_question
      * @return void
      */
-    private function _create_help_question()
+    private function _create_plugin_help_question()
     {
 
         // 当前数据表
-        $table = 'help_question';
+        $table = 'plugin_help_question';
 
         // 存在则跳过
         if ($this->hasTable($table)) return;
@@ -139,6 +139,7 @@ class InstallHelp extends Migrator
             ->addColumn('unid', 'biginteger', ['limit' => 20, 'default' => 0, 'null' => true, 'comment' => '提问用户'])
             ->addColumn('name', 'string', ['limit' => 100, 'default' => '', 'null' => true, 'comment' => '工单标题'])
             ->addColumn('phone', 'string', ['limit' => 100, 'default' => '', 'null' => true, 'comment' => '联系电话'])
+            ->addColumn('order_no', 'string', ['limit' => 20, 'default' => '', 'null' => true, 'comment' => '关联订单'])
             ->addColumn('images', 'text', ['default' => NULL, 'null' => true, 'comment' => '工单图片'])
             ->addColumn('content', 'text', ['default' => NULL, 'null' => true, 'comment' => '工单描述'])
             ->addColumn('sort', 'biginteger', ['limit' => 20, 'default' => 0, 'null' => true, 'comment' => '排序权重'])
@@ -159,16 +160,16 @@ class InstallHelp extends Migrator
     }
 
     /**
-     * 创建数据对象
-     * @class HelpQuestionX
-     * @table help_question_x
+     * 数据-问答-评论
+     * @class PluginHelpQuestionX
+     * @table plugin_help_question_x
      * @return void
      */
-    private function _create_help_question_x()
+    private function _create_plugin_help_question_x()
     {
 
         // 当前数据表
-        $table = 'help_question_x';
+        $table = 'plugin_help_question_x';
 
         // 存在则跳过
         if ($this->hasTable($table)) return;

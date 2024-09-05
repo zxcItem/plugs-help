@@ -4,14 +4,15 @@ declare (strict_types=1);
 
 namespace plugin\help\model;
 
+use plugin\account\model\Abs;
 use think\model\relation\HasMany;
 
 /**
  * 工单数据模型
- * @class HelpQuestion
+ * @class PluginHelpQuestion
  * @package plugin\help\model
  */
-class HelpQuestion extends AbsUser
+class PluginHelpQuestion extends Abs
 {
 
     // 工单状态
@@ -35,6 +36,6 @@ class HelpQuestion extends AbsUser
      */
     public function comments(): HasMany
     {
-        return $this->hasMany(HelpQuestionX::class, 'ccid', 'id');
+        return $this->hasMany(PluginHelpQuestionX::class, 'ccid', 'id');
     }
 }

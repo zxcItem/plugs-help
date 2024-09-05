@@ -6,8 +6,8 @@ declare (strict_types=1);
 namespace plugin\help\controller\api\help;
 
 use plugin\account\controller\api\Auth;
-use plugin\help\model\HelpQuestion;
-use plugin\help\model\HelpQuestionX;
+use plugin\help\model\PluginHelpQuestion;
+use plugin\help\model\PluginHelpQuestionX;
 use think\admin\Exception;
 use think\admin\helper\QueryHelper;
 use think\admin\Storage;
@@ -25,7 +25,7 @@ class Question extends Auth
      */
     public function get()
     {
-        HelpQuestion::mQuery(null, function (QueryHelper $query) {
+        PluginHelpQuestion::mQuery(null, function (QueryHelper $query) {
             if (input('id', 0) > 0) $query->with(['comments']);
             $query->withoutField('sort,deleted,deleted_time');
             $query->equal('id,reply_st')->like('name');
@@ -56,7 +56,7 @@ class Question extends Auth
             }
             $data['images'] = implode('|', $images);
         }
-        if (($model = HelpQuestion::mk())->save($data)) {
+        if (($model = PluginHelpQuestion::mk())->save($data)) {
             $this->success('提交成功！', $model->toArray());
         } else {
             $this->error('提交失败！');
@@ -84,7 +84,7 @@ class Question extends Auth
             }
             $data['images'] = implode('|', $images);
         }
-        if (HelpQuestionX::mk()->save($data)) {
+        if (PluginHelpQuestionX::mk()->save($data)) {
             $this->success('提交成功！');
         } else {
             $this->error('提交失败！');
@@ -98,12 +98,12 @@ class Question extends Auth
     public function confirm()
     {
         $data = $this->_vali(['ccid.require' => '编号不能为空！']);
-        $question = HelpQuestion::mk()->findOrEmpty($data['ccid']);
+        $question = PluginHelpQuestion::mk()->findOrEmpty($data['ccid']);
         if ($question->isEmpty() || $question->getAttr('unid') !== $this->unid) {
             $this->error('无效工单！');
         }
         $question->save(['status' => 4]);
-        HelpQuestionX::mk()->save([
+        PluginHelpQuestionX::mk()->save([
             'unid' => $this->unid, 'status' => 4,
             'ccid' => $data['ccid'], 'content' => '已主动确认完成！',
         ]);

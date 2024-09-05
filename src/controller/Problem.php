@@ -4,7 +4,7 @@ declare (strict_types=1);
 
 namespace plugin\help\controller;
 
-use plugin\help\model\HelpProblem;
+use plugin\help\model\PluginHelpProblem;
 use think\admin\Controller;
 use think\admin\helper\QueryHelper;
 use think\db\exception\DataNotFoundException;
@@ -30,7 +30,7 @@ class Problem extends Controller
     public function index()
     {
         $this->type = $this->get['type'] ?? 'index';
-        HelpProblem::mQuery($this->get)->layTable(function () {
+        PluginHelpProblem::mQuery($this->get)->layTable(function () {
             $this->title = '常见问题管理';
         }, function (QueryHelper $query) {
             $query->like('name,content')->dateBetween('create_time');
@@ -45,7 +45,7 @@ class Problem extends Controller
     public function add()
     {
         $this->title = '添加常见问题';
-        HelpProblem::mForm('form');
+        PluginHelpProblem::mForm('form');
     }
 
     /**
@@ -55,7 +55,7 @@ class Problem extends Controller
     public function edit()
     {
         $this->title = '编辑常见问题';
-        HelpProblem::mForm('form');
+        PluginHelpProblem::mForm('form');
     }
 
     /**
@@ -74,7 +74,7 @@ class Problem extends Controller
      */
     public function state()
     {
-        HelpProblem::mSave($this->_vali([
+        PluginHelpProblem::mSave($this->_vali([
             'status.in:0,1'  => '状态值范围异常！',
             'status.require' => '状态值不能为空！',
         ]));
@@ -86,7 +86,7 @@ class Problem extends Controller
      */
     public function remove()
     {
-        HelpProblem::mDelete();
+        PluginHelpProblem::mDelete();
     }
 
     /**

@@ -1,18 +1,20 @@
 <?php
 
+
 declare (strict_types=1);
 
 namespace plugin\help\model;
 
+use plugin\account\model\Abs;
 use think\admin\model\SystemUser;
 use think\model\relation\HasOne;
 
 /**
- * 工单交互数据模型
- * @class HelpQuestionX
+ * 意见反馈数据模型
+ * @class PluginHelpFeedback
  * @package plugin\help\model
  */
-class HelpQuestionX extends AbsUser
+class PluginHelpFeedback extends Abs
 {
     /**
      * 绑定回复用户数据
@@ -35,5 +37,25 @@ class HelpQuestionX extends AbsUser
     public function getImagesAttr($value): array
     {
         return str2arr($value ?? '', '|');
+    }
+
+    /**
+     * 获取回复时间
+     * @param mixed $value
+     * @return string
+     */
+    public function getReplyTimeAttr($value): string
+    {
+        return parent::getCreateTimeAttr($value);
+    }
+
+    /**
+     * 设置回复时间
+     * @param mixed $value
+     * @return string
+     */
+    public function setReplyTimeAttr($value): string
+    {
+        return parent::setCreateTimeAttr($value);
     }
 }

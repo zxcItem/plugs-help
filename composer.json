@@ -1,21 +1,16 @@
 {
     "type": "think-admin-plugin",
     "name": "xiaochao/plugs-help",
-    "license": "MIT",
-    "description": "PlugsHelp for ThinkAdmin",
+    "version": "dev-master",
     "authors": [
         {
             "name": "叶落无痕",
-            "email": "1262847141@qq.com"
+            "email": "zxcaile@foxmail.com"
         }
     ],
     "require": {
         "php": ">7.1",
-        "ext-gd": "*",
-        "ext-curl": "*",
-        "ext-json": "*",
-        "zoujingli/think-install": "^1.0|@dev",
-        "zoujingli/think-library": "^6.1|@dev"
+        "xiaochao/plugs-account": "dev-master"
     },
     "autoload": {
         "psr-4": {
@@ -25,7 +20,8 @@
     "extra": {
         "config": {
             "type": "plugin",
-            "name": "工单管理"
+            "name": "帮助咨询管理",
+            "description": "帮助咨询模块，包含：意见反馈,常见问题,工单提问"
         },
         "think": {
             "services": [

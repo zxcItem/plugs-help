@@ -5,9 +5,9 @@ declare (strict_types=1);
 
 namespace plugin\help\controller;
 
-use plugin\account\model\AccountUser;
-use plugin\help\model\HelpFeedback;
-use plugin\help\model\HelpProblem;
+use plugin\account\model\PluginAccountUser;
+use plugin\help\model\PluginHelpFeedback;
+use plugin\help\model\PluginHelpProblem;
 use think\admin\Controller;
 use think\admin\helper\QueryHelper;
 use think\admin\service\AdminService;
@@ -35,14 +35,14 @@ class Feedback extends Controller
     public function index()
     {
         $this->type = $this->get['type'] ?? 'index';
-        HelpFeedback::mQuery()->layTable(function () {
+        PluginHelpFeedback::mQuery()->layTable(function () {
             $this->title = '意见反馈管理';
         }, function (QueryHelper $query) {
             $query->with(['bindUser']);
             $query->like('name,phone,content')->dateBetween('create_time');
             $query->where(['status' => intval($this->type === 'index'), 'deleted' => 0]);
             // 提交用户搜索
-            $db = AccountUser::mQuery()->like('username')->field('id')->db();
+            $db = PluginAccountUser::mQuery()->like('username')->field('id')->db();
             if ($db->getOptions('where')) $query->whereRaw("unid in {$db->buildSql()}");
         });
     }
@@ -54,7 +54,7 @@ class Feedback extends Controller
     public function edit()
     {
         $this->title = '编辑意见反馈';
-        HelpFeedback::mForm('form');
+        PluginHelpFeedback::mForm('form');
     }
 
     /**
@@ -90,7 +90,7 @@ class Feedback extends Controller
      */
     public function state()
     {
-        HelpFeedback::mSave($this->_vali([
+        PluginHelpFeedback::mSave($this->_vali([
             'status.in:0,1'  => '状态值范围异常！',
             'status.require' => '状态值不能为空！',
         ]));
@@ -108,8 +108,8 @@ class Feedback extends Controller
             'sync.in:0,1'  => '状态值范围异常！',
             'sync.require' => '状态值不能为空！',
         ]);
-        if (($feedback = HelpFeedback::mk()->findOrEmpty($input['id']))->isExists()) try {
-            $problem = HelpProblem::mk()->where(['fid' => $input['id']])->findOrEmpty();
+        if (($feedback = PluginHelpFeedback::mk()->findOrEmpty($input['id']))->isExists()) try {
+            $problem = PluginHelpProblem::mk()->where(['fid' => $input['id']])->findOrEmpty();
             $this->app->db->transaction(function () use ($feedback, $problem, $input) {
                 $feedback->save($input);
                 empty($input['sync']) ? $problem->delete() : $problem->save([
@@ -134,6 +134,6 @@ class Feedback extends Controller
      */
     public function remove()
     {
-        HelpFeedback::mDelete();
+        PluginHelpFeedback::mDelete();
     }
 }

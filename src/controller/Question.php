@@ -4,9 +4,9 @@ declare (strict_types=1);
 
 namespace plugin\help\controller;
 
-use plugin\account\model\AccountUser;
-use plugin\help\model\HelpQuestion;
-use plugin\help\model\HelpQuestionX;
+use plugin\account\model\PluginAccountUser;
+use plugin\help\model\PluginHelpQuestion;
+use plugin\help\model\PluginHelpQuestionX;
 use think\admin\Controller;
 use think\admin\helper\QueryHelper;
 use think\admin\service\AdminService;
@@ -32,14 +32,14 @@ class Question extends Controller
      */
     public function index()
     {
-        HelpQuestion::mQuery()->layTable(function () {
+        PluginHelpQuestion::mQuery()->layTable(function () {
             $this->title = '工单提问管理';
-            $this->types = HelpQuestion::tStatus;
+            $this->types = PluginHelpQuestion::tStatus;
         }, function (QueryHelper $helper) {
             $helper->with(['bindUser'])->where(['deleted' => 0]);
             $helper->like('name,content')->equal('status')->dateBetween('create_time');
             // 提交用户搜索
-            $db = AccountUser::mQuery()->like('username')->field('id')->db();
+            $db = PluginAccountUser::mQuery()->like('username')->field('id')->db();
             if ($db->getOptions('where')) $helper->whereRaw("unid in {$db->buildSql()}");
         });
     }
@@ -51,7 +51,7 @@ class Question extends Controller
     public function edit()
     {
         $this->title = '编辑工单内容';
-        HelpQuestion::mQuery()->with(['bindUser', 'comments'])->mForm('form');
+        PluginHelpQuestion::mQuery()->with(['bindUser', 'comments'])->mForm('form');
     }
 
     /**
@@ -66,7 +66,7 @@ class Question extends Controller
                 $this->error('回复内容不能为空！');
             }
             $data['status'] = 2;
-            HelpQuestionX::mk()->save([
+            PluginHelpQuestionX::mk()->save([
                 'ccid'     => $data['id'],
                 'content'  => $data['content'],
                 'reply_by' => AdminService::getUserId()
@@ -93,7 +93,7 @@ class Question extends Controller
      */
     public function state()
     {
-        HelpQuestion::mSave($this->_vali([
+        PluginHelpQuestion::mSave($this->_vali([
             'status.in:0,1'  => '状态值范围异常！',
             'status.require' => '状态值不能为空！',
         ]));
@@ -105,6 +105,6 @@ class Question extends Controller
      */
     public function remove()
     {
-        HelpQuestion::mDelete();
+        PluginHelpQuestion::mDelete();
     }
 }
