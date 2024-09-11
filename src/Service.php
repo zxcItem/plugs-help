@@ -4,7 +4,6 @@ declare (strict_types=1);
 
 namespace plugin\help;
 
-use plugin\account\Service as AccountService;
 use think\admin\Plugin;
 
 /**
@@ -34,7 +33,7 @@ class Service extends Plugin
     {
         // 设置插件菜单
         $code = app(static::class)->appCode;
-        return array_merge(AccountService::menu(), [
+        return [
             [
                 'name' => '帮助咨询',
                 'subs' => [
@@ -43,6 +42,6 @@ class Service extends Plugin
                     ['name' => '工单提问管理', 'icon' => 'layui-icon layui-icon-transfer', 'node' => "{$code}/question/index"],
                 ],
             ]
-        ]);
+        ];
     }
 }
